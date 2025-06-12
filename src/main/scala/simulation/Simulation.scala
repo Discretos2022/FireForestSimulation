@@ -5,50 +5,21 @@ import java.util.Random
 import scala.annotation.tailrec
 import scala.collection.mutable.ArrayBuffer
 
-object Simulation {
+class Simulation(w:Int = 100, h:Int = 100, _density:Int = 40, _nStone:Int = 0, _temperature:Int = 0, _windDirection:Int = 0, _windIntensity:Int = 0) {
 
-  /*def main(args: Array[String]): Unit = {
+  val width:Int = 100
+  val height:Int = 100
+  val density: Int = _density
+  val nStone:Int = _nStone
+  val windDirection:Int = _windDirection
+  val windIntensity:Int = _windIntensity
+  var world: Array[Array[Cell]] = initGrid(width, height, density, nStone)
 
-    var world:Array[Array[Int]] = initGrid(20, 20)
+  var temperature: Int = _temperature // 253    // 0°C
 
-    while(true){
-      printGrid(world)
-      world = updateGrid(world)
-      print(Console.RESET)
-      Thread.sleep(500)
-    }
+  var cellSize = 5 // 20
 
-
-
-  }*/
-
-  // Initialise une nouvelle grille
-  /*def initGrid(w:Int, h:Int):Array[Array[Int]] = {
-
-    val array:Array[Array[Int]] = Array.ofDim(w, h)
-
-    for (i <- 0 until w) {
-      for (j <- 0 until h){
-        array(i)(j) = 0 //Random.between(0, 4)
-      }
-    }
-
-    array(0)(0) = 1
-    array(w-1)(h-1) = 1
-
-
-    for(i <- 0 until 10)
-      array(5)(i) = Cell.Stone
-
-
-
-    // array(19)(5) = Cell.Stone
-    // array(15)(10) = Cell.Stone
-
-    return array
-  }*/
-
-  def initGrid(w:Int, h:Int, density:Int = 80):Array[Array[Cell]] = {
+  def initGrid(w:Int, h:Int, density:Int, nStone:Int):Array[Array[Cell]] = {
     val array = Array.tabulate(w, h)((x, y) => new Void(x, y).asInstanceOf[Cell])
 
     /** PLACE INITIAL STONE **/
@@ -84,7 +55,27 @@ object Simulation {
       }
     }
 
-    return placeTree(nTree, array)
+    @tailrec
+    def placeStone(nStone: Int, grid: Array[Array[Cell]]): Array[Array[Cell]] = {
+      if (nStone == 0)
+        return grid
+      else {
+        val x: Int = new Random().nextInt(0, w)
+        val y: Int = new Random().nextInt(0, h)
+
+        if (grid(x)(y).isInstanceOf[Void] || grid(x)(y).isInstanceOf[Tree]) {
+          grid(x)(y) = new Stone(x, y)
+          return placeStone(nStone - 1, grid)
+        }
+        else
+          return placeStone(nStone, grid)
+      }
+    }
+
+    val arrayWithForest = placeTree(nTree, array)
+    val arrayWithForestAndStone = placeStone(nStone, arrayWithForest)
+
+    return arrayWithForestAndStone
 
 
     /** PLACE INITIAL RIVER **/
@@ -280,7 +271,7 @@ object Simulation {
 
   }
 
-  def getFireInfo(world: Array[Array[Cell]]): Float = {
+  def getFireInfo: Float = {
 
     val treeInfo = world.foldLeft(0)((n, l: Array[Cell]) =>
       n + l.foldLeft(0)((t: Int, e: Cell) => (
@@ -335,12 +326,7 @@ object Simulation {
   }*/
 
 
-  var density:Int = 40
-  var world:Array[Array[Cell]] = initGrid(100, 100, density)
 
-  var temperature:Int = 253       // 0°C
-
-  var cellSize = 5    // 20
 
   var Xplot: ArrayBuffer[Int] = new ArrayBuffer[Int]()
   var Yplot: ArrayBuffer[Int] = new ArrayBuffer[Int]()
@@ -360,77 +346,8 @@ object Simulation {
     world = updateGrid(world)
     //println(getGridInfo(world))
 
-    Xplot.append(iteration)
-    Yplot.append(getFireInfo(world).toInt)
-
-    iteration += 1
-
-    /*if(iteration == 500){
-
-      println("*********************************************************************\n")
-
-      print("[")
-      for(i <- Xplot)
-        print(i + ", ")
-      print("]")
-
-      println()
-      println()
-
-      print("[")
-      for (i <- Yplot)
-        print(i + ", ")
-      print("]")
-
-      println("\n*********************************************************************")
-
-      sys.exit(404)
-
-    }*/
-
-    if(iteration == 200){
-
-      simX.append(density)
-      simY.append(getFireInfo(world).toInt)
-      println(density)
-
-      simulation += 1
-      //temperature += 1
-      density += 1
-      iteration = 0
-      world = initGrid(world.length, world(0).length, density)
-
-      if(density >= 99){      // 50°
-        println("*********************************************************************\n")
-
-        print("[")
-        for (i <- simX)
-          print(i + ", ")
-        print("]")
-
-        println()
-        println()
-
-        print("[")
-        for (i <- simY)
-          print(i + ", ")
-        print("]")
-
-        println("\n*********************************************************************")
-
-        sys.exit(404)
-      }
-
-
-    }
-
-
-    //print(Console.RESET)
-
   }
 
-  var counter:Int = 0
-  var f:Int = 2
 
   def draw(g: Graphics2D): Unit = {
 
@@ -457,9 +374,19 @@ object Simulation {
 
     g.fillRect(c.x * cellSize, c.y * cellSize, cellSize, cellSize)
 
+    //g.setColor(Color.blue)
+    //g.drawString("Density : " + density, 10, 10)
+
   }
 
 
+  def simulExpress(iteration:Int): Unit = {
+
+    for (i:Int <- 0 until iteration){
+      update()
+    }
+
+  }
 
 
 }

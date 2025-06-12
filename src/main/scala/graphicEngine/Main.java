@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
-import simulation.Simulation;
+import simulation.Simulator;
 
 public class Main extends JPanel{
 
@@ -56,7 +56,7 @@ public class Main extends JPanel{
         drawThread = new Draw(this);
         drawThread.start();
 
-        Simulation.init();
+        Simulator.init();
 
 
     }
@@ -64,12 +64,12 @@ public class Main extends JPanel{
     public void Update(){
 
         KeyBoardInput.update();
-        Simulation.update();
+        Simulator.update();
 
         if(KeyBoardInput.isPressed(KeyEvent.VK_ESCAPE))
             System.exit(0);
 
-        updateSync.Sync(30); // 244
+        updateSync.Sync(500); // 244
         updateSync.GetFPS("Update");
 
     }
@@ -94,7 +94,7 @@ public class Main extends JPanel{
         }
         g2d = (Graphics2D) g;
 
-        Simulation.draw(g2d);
+        Simulator.draw(g2d);
 
     }
 
