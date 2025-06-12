@@ -5,7 +5,7 @@ import java.util.Random
 import scala.annotation.tailrec
 import scala.collection.mutable.ArrayBuffer
 
-class Simulation(w:Int = 100, h:Int = 100, _density:Int = 40, _nStone:Int = 0, _temperature:Int = 0, _windDirection:Double = 0, _windIntensity:Int = 0) {
+class Simulation(w:Int = 100, h:Int = 100, _density:Int = 40, _nStone:Int = 0, _temperature:Int = 0, _windDirection:Double = 0, _windIntensity:Int = 0, _humidite:Int = 0) {
 
   val width:Int = 100
   val height:Int = 100
@@ -13,6 +13,7 @@ class Simulation(w:Int = 100, h:Int = 100, _density:Int = 40, _nStone:Int = 0, _
   val nStone:Int = _nStone
   val windDirection:Double = _windDirection
   val windIntensity:Int = _windIntensity
+  val humidite:Int = _humidite
   var world: Array[Array[Cell]] = initGrid(width, height, density, nStone)
 
   var temperature: Int = _temperature // 253    // 0°C
@@ -272,8 +273,6 @@ class Simulation(w:Int = 100, h:Int = 100, _density:Int = 40, _nStone:Int = 0, _
                   val cellx: Int = (px - nx * l).toInt
                   val celly: Int = (py + ny * l).toInt
 
-                  println(nx + " ; " + ny)
-
                   if(cellx >= 0 && cellx < width && celly >= 0 && celly < height)
                     if (world(cellx)(celly).isInstanceOf[Fire])
                       fireCounter += 1
@@ -287,7 +286,7 @@ class Simulation(w:Int = 100, h:Int = 100, _density:Int = 40, _nStone:Int = 0, _
 
 
 
-            newWorld(i)(j) = Cell.tryFire(fireCounter, temperature, i, j)
+            newWorld(i)(j) = Cell.tryFire(fireCounter, temperature, i, j, humidite)
 
             //endregion
           }

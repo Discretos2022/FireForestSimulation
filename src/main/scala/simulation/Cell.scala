@@ -69,7 +69,7 @@ object Cell {
 
   }
 
-  def tryFire(fire:Int, temperature:Int, x:Int, y:Int): Cell = {
+  def tryFire(fire:Int, temperature:Int, x:Int, y:Int, h:Int): Cell = {
 
     /*if(fire == 0){
       val r: Int = new Random().nextInt(0, 1000)
@@ -93,9 +93,16 @@ object Cell {
       else new Tree(x, y)
     }*/
 
-    if(fire > 0)
-      return new Fire(x, y)
-    else
+    if(fire > 0) {
+
+      val r: Int = new Random().nextInt(0, 100 + 1)
+
+      if (r > h)
+        return new Fire(x, y)
+      else
+        return new Tree(x, y)
+
+    } else
       return new Tree(x, y)
 
   }

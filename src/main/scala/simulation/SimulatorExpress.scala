@@ -7,12 +7,12 @@ object SimulatorExpress {
   def main(args: Array[String]): Unit = {
     System.out.println("Fire Forest Simulator Express - version 0.1 - Copyright © 2025 SIEDEL")
 
+    val simX: ArrayBuffer[Int] = new ArrayBuffer[Int]()
+    val simY: ArrayBuffer[Int] = new ArrayBuffer[Int]()
 
     //region Densité de forêt
 
-    val nSim = 1
-    val simX: ArrayBuffer[Int] = new ArrayBuffer[Int]()
-    val simY: ArrayBuffer[Int] = new ArrayBuffer[Int]()
+    var nSim = 1
 
     for (i:Int <- 0 to 99){
 
@@ -54,6 +54,52 @@ object SimulatorExpress {
     println("\n*********************************************************************")
 
     //endregion
+
+
+    // region Densité + Vent Violent
+
+    nSim = 50
+    simX.clear()
+    simY.clear()
+
+    for (i: Int <- 0 to 99) {
+
+      var buffer: ArrayBuffer[Float] = new ArrayBuffer[Float]()
+
+      for (s: Int <- 0 until nSim) {
+
+        val sim: Simulation = new Simulation(50, 50, i, 0, 0, Math.PI/5, 5)
+        sim.simulExpress(200)
+        buffer.append(sim.getFireInfo)
+
+      }
+
+      val result = buffer.foldLeft(0.0f)((s: Float, e: Float) => s + e) / nSim
+
+      println(i + " : " + result)
+
+      simX.append(i)
+      simY.append(result.toInt)
+
+    }
+
+    println("*********************************************************************")
+    println("Simulation : Densité de forêt + Vent Violent")
+
+    print("X=[")
+    for (i <- simX)
+      print(i + ", ")
+    print("]")
+
+    println()
+
+    print("Y=[")
+    for (i <- simY)
+      print(i + ", ")
+    print("]")
+
+    println("\n*********************************************************************")
+
 
 
   }
