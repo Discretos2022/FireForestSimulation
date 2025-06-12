@@ -5,13 +5,13 @@ import java.util.Random
 import scala.annotation.tailrec
 import scala.collection.mutable.ArrayBuffer
 
-class Simulation(w:Int = 100, h:Int = 100, _density:Int = 40, _nStone:Int = 0, _temperature:Int = 0, _windDirection:Int = 0, _windIntensity:Int = 0) {
+class Simulation(w:Int = 100, h:Int = 100, _density:Int = 40, _nStone:Int = 0, _temperature:Int = 0, _windDirection:Double = 0, _windIntensity:Int = 0) {
 
   val width:Int = 100
   val height:Int = 100
   val density: Int = _density
   val nStone:Int = _nStone
-  val windDirection:Int = _windDirection
+  val windDirection:Double = _windDirection
   val windIntensity:Int = _windIntensity
   var world: Array[Array[Cell]] = initGrid(width, height, density, nStone)
 
@@ -33,7 +33,7 @@ class Simulation(w:Int = 100, h:Int = 100, _density:Int = 40, _nStone:Int = 0, _
     /** PLACE INITIAL FIRE **/
     val x: Int = new Random().nextInt(0, w)
     val y: Int = new Random().nextInt(0, h)
-    array(x)(y) = new Fire(x, y)
+    array(50)(50) = new Fire(50, 50)
 
     /** PLACE INITIAL RANDOM FOREST **/
     val nTree:Int = (w * h * (density / 100.0)).toInt
@@ -188,39 +188,104 @@ class Simulation(w:Int = 100, h:Int = 100, _density:Int = 40, _nStone:Int = 0, _
             //region Prise de Feu
 
             var fireCounter = 0
+            if (windIntensity < 3){
+              if (i > 0)
+                if (world(i - 1)(j).isInstanceOf[Fire])
+                  fireCounter += 1
 
-            if (i > 0)
-              if (world(i - 1)(j).isInstanceOf[Fire])
-                fireCounter += 1
+              if (j > 0)
+                if (world(i)(j - 1).isInstanceOf[Fire])
+                  fireCounter += 1
 
-            if (j > 0)
-              if (world(i)(j - 1).isInstanceOf[Fire])
-                fireCounter += 1
+              if (i < w - 1)
+                if (world(i + 1)(j).isInstanceOf[Fire])
+                  fireCounter += 1
 
-            if (i < w - 1)
-              if (world(i + 1)(j).isInstanceOf[Fire])
-                fireCounter += 1
-
-            if (j < h - 1)
-              if (world(i)(j + 1).isInstanceOf[Fire])
-                fireCounter += 1
+              if (j < h - 1)
+                if (world(i)(j + 1).isInstanceOf[Fire])
+                  fireCounter += 1
 
 
-            if (i > 0 && j > 0)
-              if (world(i - 1)(j - 1).isInstanceOf[Fire])
-                fireCounter += 1
+              if (i > 0 && j > 0)
+                if (world(i - 1)(j - 1).isInstanceOf[Fire])
+                  fireCounter += 1
 
-            if (i < w - 1 && j > 0)
-              if (world(i + 1)(j - 1).isInstanceOf[Fire])
-                fireCounter += 1
+              if (i < w - 1 && j > 0)
+                if (world(i + 1)(j - 1).isInstanceOf[Fire])
+                  fireCounter += 1
 
-            if (i < w - 1 && j < h - 1)
-              if (world(i + 1)(j + 1).isInstanceOf[Fire])
-                fireCounter += 1
+              if (i < w - 1 && j < h - 1)
+                if (world(i + 1)(j + 1).isInstanceOf[Fire])
+                  fireCounter += 1
 
-            if (i > 0 && j < h - 1)
-              if (world(i - 1)(j + 1).isInstanceOf[Fire])
-                fireCounter += 1
+              if (i > 0 && j < h - 1)
+                if (world(i - 1)(j + 1).isInstanceOf[Fire])
+                  fireCounter += 1
+            }
+
+            if(windIntensity > 0) {
+
+              // Vector
+              val vx:Double = Math.cos(_windDirection) * windIntensity / 1
+              val vy:Double = Math.cos(_windDirection) * windIntensity / 1
+              val vl:Double = windIntensity
+
+              // Normalized
+              val nx: Double = Math.cos(_windDirection)
+              val ny: Double = Math.sin(_windDirection)
+              val nl:Double = 1
+
+              val startPoints:Array[Tuple2[Int, Int]] = {
+
+                if (windDirection > 0 && windDirection < Math.PI/2)
+                  Array((1, -1), (1, 0), (0, -1))
+                else if (windDirection > Math.PI && windDirection < Math.PI)
+                  Array((-1, -1), (-1, 0), (0, -1))
+                else if (windDirection > 2*Math.PI && windDirection < Math.PI/2 + Math.PI)
+                  Array((-1, 1), (-1, 0), (0, 1))
+                else if (windDirection > 4 * Math.PI && windDirection < 2*Math.PI)
+                  Array((1, 1), (1, 0), (0, 1))
+
+                else if (windDirection == 0)
+                  Array((0, -1), (1, 0), (0, 1))
+                else if (windDirection == Math.PI/2)
+                  Array((-1, 0), (1, 0), (0, -1))
+                else if (windDirection == Math.PI)
+                  Array((0, -1), (0, 1), (-1, 0))
+                else if (windDirection == Math.PI/2 + Math.PI)
+                  Array((1, -1), (0, 1), (1, 1))
+
+                else
+                  Array()
+
+              }
+
+
+              for (p <- startPoints){
+
+                // Start Point
+                val px: Int = i + p._1
+                val py: Int = j + p._2
+
+                for (l: Int <- 0 to windIntensity) {
+
+                  val cellx: Int = (px - nx * l).toInt
+                  val celly: Int = (py + ny * l).toInt
+
+                  println(nx + " ; " + ny)
+
+                  if(cellx >= 0 && cellx < width && celly >= 0 && celly < height)
+                    if (world(cellx)(celly).isInstanceOf[Fire])
+                      fireCounter += 1
+
+                }
+
+              }
+
+
+            }
+
+
 
             newWorld(i)(j) = Cell.tryFire(fireCounter, temperature, i, j)
 

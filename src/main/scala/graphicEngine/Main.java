@@ -69,7 +69,7 @@ public class Main extends JPanel{
         if(KeyBoardInput.isPressed(KeyEvent.VK_ESCAPE))
             System.exit(0);
 
-        updateSync.Sync(500); // 244
+        updateSync.Sync(5); // 244
         updateSync.GetFPS("Update");
 
     }

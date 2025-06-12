@@ -15,7 +15,7 @@ object Simulator {
   var simY:ArrayBuffer[Int] = new ArrayBuffer[Int]()
 
 
-  var sim1:Simulation = new Simulation(100, 100, density, 50, 0)
+  var sim1:Simulation = new Simulation(100, 100, density, 0, 0, Math.PI, 5)
 
 
   def init(): Unit = {
@@ -34,7 +34,7 @@ object Simulator {
       simX.append(density)
       simY.append(sim1.getFireInfo.toInt)
 
-      sim1 = new Simulation(100, 100, density, 0, 0)
+      sim1 = new Simulation(100, 100, density, 0, 0, Math.PI, 5)
 
       simulation += 1
       density += 1
