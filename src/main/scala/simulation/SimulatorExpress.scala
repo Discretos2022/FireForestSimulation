@@ -28,7 +28,7 @@ object SimulatorExpress {
 
       val result = buffer.foldLeft(0.0f)((s:Float, e:Float) => s + e) / nSim
 
-      println(i + " : " + result)
+      //println(i + " : " + result)
 
       simX.append(i)
       simY.append(result.toInt)
@@ -58,7 +58,7 @@ object SimulatorExpress {
 
     // region Densité + Vent Violent
 
-    nSim = 50
+    /*nSim = 50
     simX.clear()
     simY.clear()
 
@@ -98,8 +98,56 @@ object SimulatorExpress {
       print(i + ", ")
     print("]")
 
+    println("\n*********************************************************************")*/
+
+    //endregion
+
+
+    // region Humidité
+
+    nSim = 1
+    simX.clear()
+    simY.clear()
+
+    for (i: Int <- 0 to 99) {
+
+      var buffer: ArrayBuffer[Float] = new ArrayBuffer[Float]()
+
+      for (s: Int <- 0 until nSim) {
+
+        val sim: Simulation = new Simulation(50, 50, 50, 0, 0, 0, 0, i)
+        sim.simulExpress(200)
+        buffer.append(sim.getFireInfo)
+
+      }
+
+      val result = buffer.foldLeft(0.0f)((s: Float, e: Float) => s + e) / nSim
+
+      //println(i + " : " + result)
+
+      simX.append(i)
+      simY.append(result.toInt)
+
+    }
+
+    println("*********************************************************************")
+    println("Simulation : Humidité")
+
+    print("X=[")
+    for (i <- simX)
+      print(i + ", ")
+    print("]")
+
+    println()
+
+    print("Y=[")
+    for (i <- simY)
+      print(i + ", ")
+    print("]")
+
     println("\n*********************************************************************")
 
+    //endregion
 
 
   }
