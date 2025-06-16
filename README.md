@@ -19,5 +19,17 @@ Les paramètres disponibles :
 - La repousse des arbres
 - Les éclaires
 
+Pour éxécuter une seul itération de la simulation :
+
+```
+sim.update()
+```
+
+Pour éxécuter X itérations :
+
+```
+sim.update(X)
+```
+
 
 
