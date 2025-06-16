@@ -34,18 +34,6 @@ class Burned(_x:Int, _y:Int) extends Cell(_x, _y){
 
 }
 
-class Burned2(_x:Int, _y:Int) extends Cell(_x, _y){
-
-}
-
-class Burned3(_x:Int, _y:Int) extends Cell(_x, _y){
-
-}
-
-class Burned4(_x:Int, _y:Int) extends Cell(_x, _y){
-
-}
-
 
 object Cell {
 
@@ -67,28 +55,6 @@ object Cell {
   }
 
   def tryFire(fire:Int, x:Int, y:Int, h:Int, lightning:Int): Cell = {
-
-    /*if(fire == 0){
-      val r: Int = new Random().nextInt(0, 1000)
-      if (r <= 0 + temperature*5) new Fire(x, y)
-      else new Tree(x, y)
-    }
-    else {
-      val r: Int = new Random().nextInt(0, 800)
-      if (r < 100 * fire + temperature*5) new Fire(x, y)
-      else new Tree(x, y)
-    }*/
-
-    /*if (fire == 0) {
-      val r: Int = new Random().nextInt(0, 1000)
-      if (r <= 0 + temperature/2) new Fire(x, y)
-      else new Tree(x, y)
-    }
-    else {
-      val r: Int = new Random().nextInt(0, 800)
-      if (r < 10 * fire + temperature) new Fire(x, y)
-      else new Tree(x, y)
-    }*/
 
     if(fire > 0) {
 

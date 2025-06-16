@@ -75,12 +75,10 @@ class Simulation(w:Int = 100, h:Int = 100, _density:Int = 40, _nStone:Int = 0, _
 
     return arrayWithForestAndStone
 
-
     /** PLACE INITIAL RIVER **/
     //for (i <- 0 until 20)
       //array(i)(13) = new Water(i, 13)
 
-    array
   }
 
 
@@ -180,7 +178,6 @@ class Simulation(w:Int = 100, h:Int = 100, _density:Int = 40, _nStone:Int = 0, _
               newWorld(i)(j) = new Void(i, j)
             }
 
-
             //endregion
 
           }
@@ -228,15 +225,9 @@ class Simulation(w:Int = 100, h:Int = 100, _density:Int = 40, _nStone:Int = 0, _
 
             if(windIntensity > 0) {
 
-              // Vector
-              val vx:Double = Math.cos(_windDirection) * windIntensity / 1
-              val vy:Double = Math.cos(_windDirection) * windIntensity / 1
-              val vl:Double = windIntensity
-
               // Normalized
               val nx: Double = Math.cos(_windDirection)
               val ny: Double = Math.sin(_windDirection)
-              val nl:Double = 1
 
               val startPoints:Array[Tuple2[Int, Int]] = {
 
@@ -286,18 +277,14 @@ class Simulation(w:Int = 100, h:Int = 100, _density:Int = 40, _nStone:Int = 0, _
 
             }
 
-
-
             newWorld(i)(j) = Cell.tryFire(fireCounter, i, j, humidity, lightning)
 
             //endregion
+
           }
 
-
-
-
-          //case water: Water =>
-          //case stone: Stone =>
+          case water: Water =>
+          case stone: Stone =>
           case fire: Fire => newWorld(i)(j) = new Burned(i, j)
           case burned: Burned =>
             if (regrows)
@@ -364,39 +351,7 @@ class Simulation(w:Int = 100, h:Int = 100, _density:Int = 40, _nStone:Int = 0, _
 
   }
 
-  // Print la grille
-  /*def printGrid(array:Array[Array[Cell]]): Unit = {
 
-    println("-" * (array.length * 3 - 2))
-    for (i <- array.indices) {
-
-      var str:String = ""
-      for (j <- array(i).indices) {
-        if (array(i)(j).ID == Cell.Tree)
-          str += "⍋  " //"\uD83C\uDF32 "
-        else if(array(i)(j).ID == Cell.Fire)
-          str += "F  "
-          //str += "\uD83D\uDF02  "
-        else if (array(i)(j).ID == Cell.Water)
-          str += "░  "
-        else if (array(i)(j).ID == Cell.Stone)
-          str += "█  "
-        else if (array(i)(j).ID == Cell.MiniTree)
-          str += "▲  "
-        else
-          str += "   " //array(i)(j) + "  "
-      }
-      println(str)
-    }
-    println("-" * (array.length * 3 - 2))
-
-  }*/
-
-
-
-
-  var Xplot: ArrayBuffer[Int] = new ArrayBuffer[Int]()
-  var Yplot: ArrayBuffer[Int] = new ArrayBuffer[Int]()
   var iteration:Int = 0
 
   var simulation:Int = 0
@@ -408,11 +363,7 @@ class Simulation(w:Int = 100, h:Int = 100, _density:Int = 40, _nStone:Int = 0, _
   }
 
   def update(): Unit = {
-
-    //printGrid(world)
     world = updateGrid(world)
-    //println(getGridInfo(world))
-
   }
 
 
@@ -433,16 +384,10 @@ class Simulation(w:Int = 100, h:Int = 100, _density:Int = 40, _nStone:Int = 0, _
       case stone: Stone => g.setColor(Color.GRAY)
       case fire: Fire => g.setColor(Color.RED)
       case burned: Burned => g.setColor(Color.black)
-      case burned: Burned2 => g.setColor(Color.black)
-      case burned: Burned3 => g.setColor(Color.black)
-      case burned: Burned4 => g.setColor(Color.black)
       case _ => g.setColor(Color.WHITE)
     }
 
     g.fillRect(c.x * cellSize, c.y * cellSize, cellSize, cellSize)
-
-    //g.setColor(Color.blue)
-    //g.drawString("Density : " + density, 10, 10)
 
   }
 

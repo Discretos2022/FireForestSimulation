@@ -66,9 +66,6 @@ object Simulator {
 
   }
 
-  var counter:Int = 0
-  var f:Int = 2
-
   def draw(g: Graphics2D): Unit = {
 
     // Draw cells
