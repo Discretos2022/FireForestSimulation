@@ -46,8 +46,9 @@ sim.update(X)
 4 exemples de simulations sont disponibles dans le fichier `SimulatorExpress.scala`.
 
 
-Pour faire une simulation avec visualisation, il suffit de mettre la simulation dans le fichier `Simulator.scala` et de lancer le fichier `Main.java`
+Pour faire une simulation avec visualisation, il suffit de mettre la simulation dans le fichier `Simulator.scala` et de lancer le fichier `Main.java`.
 Une simulation d'exemple avec variation de paramètre y est déjà placée.
+(Pour modifier la vitesse de calcule pour ralentir ou accélérer la visualisation, il suffit de modifier la ligne `updateSync.Sync(...);` dans le fichier `Main.java`)
 
 
 ## Comprendre et visualiser les résultats
