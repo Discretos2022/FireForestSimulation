@@ -56,20 +56,17 @@ object Cell {
   val Fire:Int = 4
   val Burned:Int = 5
 
-  def tryTree(x:Int, y:Int, temperature:Int): Cell = {
-    /*val r: Int = new Random().nextInt(0, 10)
-    if (r >= 9) new Tree(x, y) // 8
-    else new Void(x, y)*/
+  def tryTree(x:Int, y:Int): Cell = {
 
-    return new Void(x, y)
+    val r: Int = new Random().nextInt(0, 2)
 
-    val r: Int = new Random().nextInt(0, 100)
-    if (r <= 80) new Tree(x, y)
-    else new Void(x, y)
-
+    if (r == 0)
+      new Tree(x, y)
+    else
+      new Void(x, y)
   }
 
-  def tryFire(fire:Int, temperature:Int, x:Int, y:Int, h:Int): Cell = {
+  def tryFire(fire:Int, x:Int, y:Int, h:Int, lightning:Int): Cell = {
 
     /*if(fire == 0){
       val r: Int = new Random().nextInt(0, 1000)
@@ -102,8 +99,19 @@ object Cell {
       else
         return new Tree(x, y)
 
-    } else
-      return new Tree(x, y)
+    } else {
+      if (lightning > 0){
+
+        val r: Int = new Random().nextInt(0, 100 + 1)
+        if (r < lightning)
+          return new Fire(x, y)
+        else
+          return new Tree(x, y)
+
+      }
+      else
+        return new Tree(x, y)
+    }
 
   }
 

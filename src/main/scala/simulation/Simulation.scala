@@ -5,7 +5,7 @@ import java.util.Random
 import scala.annotation.tailrec
 import scala.collection.mutable.ArrayBuffer
 
-class Simulation(w:Int = 100, h:Int = 100, _density:Int = 40, _nStone:Int = 0, _temperature:Int = 0, _windDirection:Double = 0, _windIntensity:Int = 0, _humidity:Int = 0) {
+class Simulation(w:Int = 100, h:Int = 100, _density:Int = 40, _nStone:Int = 0, _temperature:Int = 0, _windDirection:Double = 0, _windIntensity:Int = 0, _humidity:Int = 0, _regrows:Boolean = false, _lightning:Int = 0) {
 
   val width:Int = w
   val height:Int = h
@@ -14,27 +14,23 @@ class Simulation(w:Int = 100, h:Int = 100, _density:Int = 40, _nStone:Int = 0, _
   val windDirection:Double = _windDirection
   val windIntensity:Int = _windIntensity
   val humidity:Int = _humidity
-  var world: Array[Array[Cell]] = initGrid(width, height, density, nStone)
+  val regrows:Boolean = _regrows
+  val lightning:Int = _lightning
+  var world: Array[Array[Cell]] = initGrid(width, height, density, nStone, lightning)
 
   var temperature: Int = _temperature // 253    // 0°C
 
   var cellSize = 5 // 20
 
-  def initGrid(w:Int, h:Int, density:Int, nStone:Int):Array[Array[Cell]] = {
+  def initGrid(w:Int, h:Int, density:Int, nStone:Int, lightning:Int):Array[Array[Cell]] = {
     val array = Array.tabulate(w, h)((x, y) => new Void(x, y).asInstanceOf[Cell])
 
-    /** PLACE INITIAL STONE **/
-    //for (i <- 0 until 10)
-      //array(5)(i) = new Stone(5, i)
-
-    /** PLACE INITIAL TREE **/
-    //array(0)(0) = new Tree(0, 0)
-    //array(w - 1)(h - 1) = new Tree(w-1, h-1)
-
     /** PLACE INITIAL FIRE **/
-    val x: Int = new Random().nextInt(0, w)
-    val y: Int = new Random().nextInt(0, h)
-    array(50)(50) = new Fire(50, 50)
+    if (lightning == 0){
+      val x: Int = new Random().nextInt(0, w)
+      val y: Int = new Random().nextInt(0, h)
+      array(x)(y) = new Fire(x, y)
+    }
 
     /** PLACE INITIAL RANDOM FOREST **/
     val nTree:Int = (w * h * (density / 100.0)).toInt
@@ -72,6 +68,7 @@ class Simulation(w:Int = 100, h:Int = 100, _density:Int = 40, _nStone:Int = 0, _
           return placeStone(nStone, grid)
       }
     }
+
 
     val arrayWithForest = placeTree(nTree, array)
     val arrayWithForestAndStone = placeStone(nStone, arrayWithForest)
@@ -176,8 +173,13 @@ class Simulation(w:Int = 100, h:Int = 100, _density:Int = 40, _nStone:Int = 0, _
               }
             }
 
-            if(treeCounter > 0 && fireCounter == 0)
-              newWorld(i)(j) = Cell.tryTree(i, j, temperature)
+            if(regrows) {
+              if(treeCounter > 0 && fireCounter == 0)
+                newWorld(i)(j) = Cell.tryTree(i, j)
+            } else {
+              newWorld(i)(j) = new Void(i, j)
+            }
+
 
             //endregion
 
@@ -286,7 +288,7 @@ class Simulation(w:Int = 100, h:Int = 100, _density:Int = 40, _nStone:Int = 0, _
 
 
 
-            newWorld(i)(j) = Cell.tryFire(fireCounter, temperature, i, j, humidity)
+            newWorld(i)(j) = Cell.tryFire(fireCounter, i, j, humidity, lightning)
 
             //endregion
           }
@@ -297,11 +299,12 @@ class Simulation(w:Int = 100, h:Int = 100, _density:Int = 40, _nStone:Int = 0, _
           //case water: Water =>
           //case stone: Stone =>
           case fire: Fire => newWorld(i)(j) = new Burned(i, j)
-          case burned: Burned => newWorld(i)(j) = new Burned(i, j)
-          case burned: Burned2 => newWorld(i)(j) = new Burned3(i, j)
-          case burned: Burned3 => newWorld(i)(j) = new Burned4(i, j)
-          case burned: Burned4 => newWorld(i)(j) = new Void(i, j)
-          case _ => newWorld(i)(j) = world(i)(j)
+          case burned: Burned =>
+            if (regrows)
+              newWorld(i)(j) = new Void(i, j)
+            else
+              newWorld(i)(j) = new Burned(i, j)
+          //case _ => newWorld(i)(j) = world(i)(j)
         }
       }
     }
@@ -310,7 +313,7 @@ class Simulation(w:Int = 100, h:Int = 100, _density:Int = 40, _nStone:Int = 0, _
 
   }
 
-  def getGridInfo(world:Array[Array[Cell]]): Float = {
+  def getTreeInfo: Float = {
 
     val treeInfo = world.foldLeft(0)((n, l:Array[Cell]) =>
       n + l.foldLeft(0)((t:Int, e:Cell) => (

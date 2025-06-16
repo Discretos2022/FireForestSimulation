@@ -34,7 +34,7 @@ object Simulator {
       simX.append(density)
       simY.append(sim1.getFireInfo.toInt)
 
-      sim1 = new Simulation(100, 100, density, 0, 0, 0, 0, 0)
+      sim1 = new Simulation(100, 100, density, 0, 0, 0, 0, 0, true, 10)
 
       simulation += 1
       density += 1

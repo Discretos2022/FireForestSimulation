@@ -105,7 +105,7 @@ object SimulatorExpress {
 
     // region Humidité
 
-    nSim = 1
+    /*nSim = 1
     simX.clear()
     simY.clear()
 
@@ -132,6 +132,40 @@ object SimulatorExpress {
 
     println("*********************************************************************")
     println("Simulation : Humidité")
+
+    print("X=[")
+    for (i <- simX)
+      print(i + ", ")
+    print("]")
+
+    println()
+
+    print("Y=[")
+    for (i <- simY)
+      print(i + ", ")
+    print("]")
+
+    println("\n*********************************************************************")*/
+
+    //endregion
+
+
+    // region Repousse après incendie
+
+    nSim = 1
+    simX.clear()
+    simY.clear()
+
+    val sim: Simulation = new Simulation(50, 50, 1, 0, 0, 0, 0, 0, true)
+
+    for (i: Int <- 0 to 99) {
+      sim.simulExpress(1)
+      simX.append(i)
+      simY.append(sim.getTreeInfo.toInt)
+    }
+
+    println("*********************************************************************")
+    println("Simulation : Repousse de la forêt après incendie")
 
     print("X=[")
     for (i <- simX)
