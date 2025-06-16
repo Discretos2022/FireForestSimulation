@@ -79,6 +79,10 @@ plt.show()
 
 
 ## Screenshots
+
+
+https://github.com/user-attachments/assets/7435bc20-4e88-4683-a9f4-ad1864766de9
+
 ![image](https://github.com/user-attachments/assets/c7dd225d-342c-4d46-be03-b79339798506)
 
 
