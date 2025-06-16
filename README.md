@@ -79,7 +79,8 @@ plt.show()
 
 
 ## Screenshots
-![image](https://github.com/user-attachments/assets/05f91088-393f-4e1f-a47c-8438c1f0f226)
+![image](https://github.com/user-attachments/assets/c7dd225d-342c-4d46-be03-b79339798506)
+
 
 
 
