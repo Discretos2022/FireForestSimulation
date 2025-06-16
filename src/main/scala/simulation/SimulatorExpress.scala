@@ -21,7 +21,7 @@ object SimulatorExpress {
       for(s:Int <- 0 until nSim){
 
         val sim: Simulation = new Simulation(50, 50, i, 0)
-        sim.simulExpress(200)
+        sim.update(200)
         buffer.append(sim.getFireInfo)
 
       }
@@ -159,7 +159,7 @@ object SimulatorExpress {
     val sim: Simulation = new Simulation(50, 50, 1, 0, 0, 0, 0, 0, true)
 
     for (i: Int <- 0 to 99) {
-      sim.simulExpress(1)
+      sim.update(1)
       simX.append(i)
       simY.append(sim.getTreeInfo.toInt)
     }

@@ -447,7 +447,7 @@ class Simulation(w:Int = 100, h:Int = 100, _density:Int = 40, _nStone:Int = 0, _
   }
 
 
-  def simulExpress(iteration:Int): Unit = {
+  def update(iteration:Int): Unit = {
 
     for (i:Int <- 0 until iteration){
       update()
