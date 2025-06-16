@@ -6,7 +6,8 @@ Pour créer un simulation, il faut créer une instance de la classe Simulation :
 
 ```
 // Simulation simple 40% d'arbre dans une grille de 50x50 avec 0 rocher
-val sim: Simulation = new Simulation(50, 50, 40, 0)```
+val sim: Simulation = new Simulation(50, 50, 40, 0)
+```
 
 Les paramètres disponibles :
 - La taille de la grille
