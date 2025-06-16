@@ -2,6 +2,8 @@
 
 Ce simulateur permet de simuler des feux de forêts. Il fonctionne avec un automate cellulaire.
 
+## Faire une simulation
+
 Pour créer un simulation, il faut créer une instance de la classe Simulation :
 
 ```
@@ -41,14 +43,38 @@ Pour éxécuter X itérations :
 sim.update(X)
 ```
 
-4 exemples de simulations sont disponibles dans le fichier `SimulatorExpress.scala`
+4 exemples de simulations sont disponibles dans le fichier `SimulatorExpress.scala`.
 
 
 Pour faire une simulation avec visualisation, il suffit de mettre la simulation dans le fichier `Simulator.scala` et de lancer le fichier `Main.java`
 Une simulation d'exemple avec variation de paramètre y est déjà placée.
 
 
+## Comprendre et visualiser les résultats
 
+Dans les 4 exemples du fichier `SimulatorExpress.scala`, les résultats enregistré sont retourné avec le format ci-dessous :
+
+```
+*********************************************************************
+Simulation : Densité de forêt
+X=[0, 1, 2, 3, 4, 5, ... 99, ]
+Y=[0, 4, 2, 1, 1, 1, ... 100, ]
+*********************************************************************
+```
+
+On peut les visualiser très facilement avec un petit programme python :
+
+```
+X=[0, 1, 2, 3, ...
+Y=[0, 1, 0, 0, ...
+plt.plot(X, Y)
+plt.title("Simulation : Pourcentage de forêt")
+plt.xlabel("% d'arbre généré")
+plt.ylabel("% d'arbre brûlé")
+plt.ylim((0, 100))
+plt.grid()
+plt.show()
+```
 
 
 
