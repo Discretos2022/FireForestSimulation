@@ -89,6 +89,7 @@ Simulation d'un simple feu de forêt (50% d'arbre, pas de repousse, pas d'éclai
 ![Sim2](https://github.com/user-attachments/assets/7b61cd59-7869-4cc8-8b0c-76eb148036e4)
 
 (La vidéo ne fait que 10 sec à cause de sa taille)
+
 https://github.com/user-attachments/assets/7435bc20-4e88-4683-a9f4-ad1864766de9
 
 Visualisation des résultats avec Python
