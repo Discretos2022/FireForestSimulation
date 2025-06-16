@@ -19,7 +19,7 @@ Les paramètres disponibles :
 - L’intensité du vent
 - L’humidité
 - La repousse des arbres
-- Les éclaires
+- Les éclairs
 - Un monde déjà généré
 
 Les types de cellules disponibles :
@@ -79,7 +79,22 @@ plt.show()
 
 
 ## Screenshots
+
+Simulation avec éclaires et repousse des arbres
+
 ![image](https://github.com/user-attachments/assets/c7dd225d-342c-4d46-be03-b79339798506)
+
+Simulation d'un simple feu de forêt (50% d'arbre, pas de repousse, pas d'éclairs)
+
+![Sim2](https://github.com/user-attachments/assets/7b61cd59-7869-4cc8-8b0c-76eb148036e4)
+
+(La vidéo ne fait que 10 sec à cause de sa taille)
+
+https://github.com/user-attachments/assets/7435bc20-4e88-4683-a9f4-ad1864766de9
+
+Visualisation des résultats avec Python
+![image](https://github.com/user-attachments/assets/a74e2a7c-8824-4d32-9009-e9dbf80375e3)
+
 
 
 
