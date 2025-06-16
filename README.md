@@ -80,10 +80,11 @@ plt.show()
 
 ## Screenshots
 
+![image](https://github.com/user-attachments/assets/c7dd225d-342c-4d46-be03-b79339798506)
+
+![Sim2](https://github.com/user-attachments/assets/7b61cd59-7869-4cc8-8b0c-76eb148036e4)
 
 https://github.com/user-attachments/assets/7435bc20-4e88-4683-a9f4-ad1864766de9
-
-![image](https://github.com/user-attachments/assets/c7dd225d-342c-4d46-be03-b79339798506)
 
 
 
