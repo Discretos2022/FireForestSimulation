@@ -51,7 +51,7 @@ Une simulation d'exemple avec variation de paramètre y est déjà placée.
 (Pour modifier la vitesse de calcule pour ralentir ou accélérer la visualisation, il suffit de modifier la ligne `updateSync.Sync(...);` dans le fichier `Main.java`)
 
 
-## Comprendre et visualiser les résultats
+## Récuperer, Comprendre et Visualiser les résultats
 
 Dans les 4 exemples du fichier `SimulatorExpress.scala`, les résultats enregistré sont retourné avec le format ci-dessous :
 
