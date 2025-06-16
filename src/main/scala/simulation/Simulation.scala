@@ -5,7 +5,7 @@ import java.util.Random
 import scala.annotation.tailrec
 import scala.collection.mutable.ArrayBuffer
 
-class Simulation(w:Int = 100, h:Int = 100, _density:Int = 40, _nStone:Int = 0, _temperature:Int = 0, _windDirection:Double = 0, _windIntensity:Int = 0, _humidity:Int = 0, _regrows:Boolean = false, _lightning:Int = 0) {
+class Simulation(w:Int = 100, h:Int = 100, _density:Int = 40, _nStone:Int = 0, _temperature:Int = 0, _windDirection:Double = 0, _windIntensity:Int = 0, _humidity:Int = 0, _regrows:Boolean = false, _lightning:Int = 0, baseWorld:Array[Array[Cell]] = null) {
 
   val width:Int = w
   val height:Int = h
@@ -16,7 +16,7 @@ class Simulation(w:Int = 100, h:Int = 100, _density:Int = 40, _nStone:Int = 0, _
   val humidity:Int = _humidity
   val regrows:Boolean = _regrows
   val lightning:Int = _lightning
-  var world: Array[Array[Cell]] = initGrid(width, height, density, nStone, lightning)
+  var world: Array[Array[Cell]] = if (baseWorld == null) initGrid(width, height, density, nStone, lightning) else baseWorld
 
   var temperature: Int = _temperature // 253    // 0°C
 
