@@ -1,8 +1,6 @@
 package simulation
 
-import java.awt.{Color, Graphics2D}
-import java.util.Random
-import scala.annotation.tailrec
+import java.awt.Graphics2D
 import scala.collection.mutable.ArrayBuffer
 
 object Simulator {
@@ -15,8 +13,7 @@ object Simulator {
   var simY:ArrayBuffer[Int] = new ArrayBuffer[Int]()
 
 
-  var sim1:Simulation = new Simulation(100, 100, density, 0, 0, 0, 0, 50)
-
+  var sim1:Simulation = new Simulation(100, 100, 0, 0, 0, 0, 0, 0)
 
   def init(): Unit = {
     sim1.init()
@@ -30,11 +27,10 @@ object Simulator {
 
     if(iteration == 200){
 
-
       simX.append(density)
       simY.append(sim1.getFireInfo.toInt)
 
-      sim1 = new Simulation(100, 100, density, 0, 0, 0, 0, 0, true, 10)
+      sim1 = new Simulation(100, 100, density, 0, 0, 0, 0, 0, false, 0)
 
       simulation += 1
       density += 1
