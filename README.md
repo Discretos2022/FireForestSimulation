@@ -31,5 +31,19 @@ Pour éxécuter X itérations :
 sim.update(X)
 ```
 
+4 exemples de simulations sont disponibles dans le fichier `SimulatorExpress.scala`
+
+
+Pour faire une simulation avec visualisation, il suffit de mettre la simulation dans le fichier `Simulator.scala`.
+Une simulation d'exemple avec variation de paramètre y est déjà placée.
+
+
+
+
+
+
+
+
+
 
 
