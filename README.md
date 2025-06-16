@@ -18,6 +18,7 @@ Les paramètres disponibles :
 - L’humidité
 - La repousse des arbres
 - Les éclaires
+- Un monde déjà généré
 
 Pour éxécuter une seul itération de la simulation :
 
@@ -34,12 +35,13 @@ sim.update(X)
 4 exemples de simulations sont disponibles dans le fichier `SimulatorExpress.scala`
 
 
-Pour faire une simulation avec visualisation, il suffit de mettre la simulation dans le fichier `Simulator.scala`.
+Pour faire une simulation avec visualisation, il suffit de mettre la simulation dans le fichier `Simulator.scala` et de lancer le fichier `Main.java`
 Une simulation d'exemple avec variation de paramètre y est déjà placée.
 
 
 
 
+![image](https://github.com/user-attachments/assets/35c4b595-4e9d-40d7-9f25-11614386285f)
 
 
 
