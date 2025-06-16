@@ -20,6 +20,15 @@ Les paramètres disponibles :
 - Les éclaires
 - Un monde déjà généré
 
+Les types de cellules disponibles :
+- Vide
+- Arbre
+- Feu
+- Cendre
+- Eau
+- Pierre
+
+
 Pour éxécuter une seul itération de la simulation :
 
 ```
@@ -37,11 +46,6 @@ sim.update(X)
 
 Pour faire une simulation avec visualisation, il suffit de mettre la simulation dans le fichier `Simulator.scala` et de lancer le fichier `Main.java`
 Une simulation d'exemple avec variation de paramètre y est déjà placée.
-
-
-
-
-![image](https://github.com/user-attachments/assets/35c4b595-4e9d-40d7-9f25-11614386285f)
 
 
 
